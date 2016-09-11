@@ -11,15 +11,21 @@ object Lab1 {
         var b = right
         var x1 = b - (b - a) / fi
         var x2 = a + (b - a) / fi
+        var y1 = f(x1)
+        var y2 = f(x2)
         while (Math.abs(b - a) > e) {
-            if(f(x1) >= f(x2)) {
+            if(y1 >= y2) {
                 a = x1
                 x1 = x2
+                y1 = y2
                 x2 = a + (b - a) / fi
+                y2 = f(x2)
             } else {
                 b = x2
                 x2 = x1
+                y2 = y1
                 x1 = b - (b - a) / fi
+                y1 = f(x1)
             }
         }
         return (a + b) / 2
