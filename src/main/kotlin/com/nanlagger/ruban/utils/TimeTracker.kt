@@ -14,4 +14,6 @@ object TimeTracker {
     fun start() {
         startTime = System.nanoTime()
     }
+
+    fun get() = (System.nanoTime() - startTime) / 1000000
 }
