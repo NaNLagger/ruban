@@ -8,50 +8,47 @@ import java.util.*
  */
 
 val mLvl = HashMap<Int, Int>()
+val f = Array<Int>(300001, {0})
 
 fun main(args: Array<String>) {
     val n = Integer.valueOf(readLine())
     val arr = Array<Int>(n, {0})
-    for (i in 0..n - 1)
-        arr[i] = try { Integer.valueOf(readLine()) } catch (e: Exception) {0}
+    for (i in 0..n - 1) {
+        val s = readLine()
+        arr[i] = try { Integer.valueOf(s) } catch (e: Exception) {
+            0
+        }
+    }
     for (w in arr)
         println(balls(w))
 }
 
 //fun main(args: Array<String>) {
-//    var max = 0L
-//    var maxW = 0
-//    for (i in 0..10) {
-//        val l = i * 10000
-//        val r = (i+1) * 10000
-//        for (w in l..r) {
-//            TimeTracker.start()
-//            balls(w)
-//            //println("$w -> ${balls(w)} , ${TimeTracker.get()}")
-//            if (max < TimeTracker.get()) {
-//                max = TimeTracker.get()
-//                maxW = w
-//            }
-//        }
-//        println("Max: $max, $maxW")
-//    }
-//    println("Max: $max, $maxW")
+//    TimeTracker.start()
+//    for(i in 0..300000)
+//        balls(i)
+//        //println(balls(i))
+//    TimeTracker.print()
 //}
 
 fun balls(n: Int): Int {
-    val f = Array<Int>(n + 1, {0})
+    if(f[n] != 0)
+        return f[n]
+    //var j = 1
     for(i in 0..n) {
+        if (f[i] != 0)
+            continue
         var min = Int.MAX_VALUE
         var j = 1
         var lvlValue = lvl(j)
         while (i - lvlValue >= 0) {
-            min = if(f[i - lvlValue] < min) f[i - lvlValue] else min
+            min = if(f[i - lvlValue] <= min)  f[i - lvlValue] else min
             j++
             lvlValue = lvl(j)
         }
         f[i] = if(i == 0) f[i] else min + 1
     }
-    return f.last()
+    return f[n]
 }
 
 fun lvl(n: Int): Int {
